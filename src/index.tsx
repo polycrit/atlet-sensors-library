@@ -6,8 +6,8 @@ const LINKING_ERROR =
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo Go\n';
 
-const AtletSensorsLibrary = NativeModules.AtletSensorsLibrary
-  ? NativeModules.AtletSensorsLibrary
+const Accelerometer = NativeModules.Accelerometer
+  ? NativeModules.Accelerometer
   : new Proxy(
       {},
       {
@@ -17,6 +17,37 @@ const AtletSensorsLibrary = NativeModules.AtletSensorsLibrary
       }
     );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return AtletSensorsLibrary.multiply(a, b);
-}
+const Gravity = NativeModules.Gravity
+  ? NativeModules.Gravity
+  : new Proxy(
+      {},
+      {
+        get() {
+          throw new Error(LINKING_ERROR);
+        },
+      }
+    );
+
+const Gyroscope = NativeModules.Gyroscope
+  ? NativeModules.Gyroscope
+  : new Proxy(
+      {},
+      {
+        get() {
+          throw new Error(LINKING_ERROR);
+        },
+      }
+    );
+
+const Magnetometer = NativeModules.Magnetometer
+  ? NativeModules.Magnetometer
+  : new Proxy(
+      {},
+      {
+        get() {
+          throw new Error(LINKING_ERROR);
+        },
+      }
+    );
+
+export { Accelerometer, Gravity, Gyroscope, Magnetometer };

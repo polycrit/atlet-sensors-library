@@ -1,18 +1,21 @@
-import * as React from 'react';
-
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'atlet-sensors-library';
+import { StyleSheet, View, Text, NativeEventEmitter } from 'react-native';
+import { Accelerometer } from 'atlet-sensors-library';
+import React, { useEffect } from 'react';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  useEffect(() => {
+    const eventEmitter = new NativeEventEmitter(Accelerometer);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const eventListener = eventEmitter.addListener('accelerometer', (event) => {
+      console.log(event);
+    });
 
-  React.useEffect(() => {
-    multiply(3, 7).then(setResult);
-  }, []);
+    return () => Accelerometer.removeListeners(1);
+  });
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Text>Accelerometer</Text>
     </View>
   );
 }

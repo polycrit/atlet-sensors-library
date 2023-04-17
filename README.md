@@ -11,11 +11,19 @@ npm install atlet-sensors-library
 ## Usage
 
 ```js
-import { multiply } from 'atlet-sensors-library';
+import { Accelerometer } from 'atlet-sensors-library';
 
 // ...
 
-const result = await multiply(3, 7);
+const eventEmitter = new NativeEventEmitter(Accelerometer);
+
+const eventListener = eventEmitter.addListener('accelerometer', (event) => {
+  console.log(event);
+});
+
+// ...
+
+Accelerometer.removeListeners(1);
 ```
 
 ## Contributing
